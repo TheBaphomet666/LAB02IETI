@@ -13,6 +13,16 @@ import './Login.css'
 
 export class Login extends React.Component{
 
+constructor(props) {
+        super(props);
+        this.state={user:"",password:""};
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleUserTextChange=this.handleUserTextChange.bind(this);
+        this.handlePasswordTextChange=this.handlePasswordTextChange.bind(this);
+
+
+    }
+
     render(){
         return (
             <React.Fragment>
@@ -26,7 +36,9 @@ export class Login extends React.Component{
                         <form className="form">
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="email">Email Address</InputLabel>
-                                <Input id="email" name="email" autoComplete="email" autoFocus />
+                                <Input id="email" name="email" autoComplete="email" autoFocus
+                                 onChange={this.handleUserTextChange}
+                                 />
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="password">Password</InputLabel>
@@ -35,6 +47,7 @@ export class Login extends React.Component{
                                     type="password"
                                     id="password"
                                     autoComplete="current-password"
+                                    onChange={this.handlePasswordTextChange}
                                 />
                             </FormControl>
                             <Button
@@ -43,6 +56,8 @@ export class Login extends React.Component{
                                 variant="raised"
                                 color="primary"
                                 className="submit"
+                                onClick={this.handleSubmit}
+
                             >
                                 Sign in
                             </Button>
@@ -51,6 +66,29 @@ export class Login extends React.Component{
                 </main>
             </React.Fragment>
         );
+    }
+
+    handleSubmit(e) {
+            //localStorage.setItem('Called', "true");
+            if(localStorage.getItem('User')===this.state.user  && localStorage.getItem('Password')===this.state.password ){
+                localStorage.setItem('IsLoggedIn', "true");
+            }
+
+    }
+    handleUserTextChange(e) {
+        console.log(e.target.value);
+
+        this.setState({
+            user: e.target.value
+
+        });
+    }
+
+    handlePasswordTextChange(e) {
+        console.log(e.target.value);
+        this.setState({
+            password: e.target.value
+        });
     }
 
 }
